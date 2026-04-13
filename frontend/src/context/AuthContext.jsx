@@ -72,14 +72,15 @@ export function AuthProvider({ children }) {
   };
 
   // Fixed logout
-  const logout = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) console.error('Logout error:', error.message);
-    setUser(null);
-    setProfile(null);
-    localStorage.removeItem('token');
-    window.location.href = '/'; // force full page reload to clear state
-  };
+  const logout = () => {
+  // Clear everything immediately without waiting for Supabase
+  localStorage.clear();
+  sessionStorage.clear();
+  // Then sign out from Supabase in background
+  supabase.auth.signOut().catch(console.error);
+  // Force hard redirect
+  window.location.replace('/');
+};
 
   const isAdmin    = profile?.role === 'ADMIN';
   const isArtist   = profile?.role === 'ARTIST';
