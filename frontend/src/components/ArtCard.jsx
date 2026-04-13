@@ -8,13 +8,15 @@ export default function ArtCard({ artwork, onViewInRoom }) {
   return (
     <div className="group relative bg-white overflow-hidden cursor-pointer border border-transparent hover:border-ash transition-colors">
       {/* Image Container */}
-      <div className="relative aspect-[3/4] overflow-hidden bg-smoke">
+      <div className="relative w-full bg-smoke overflow-hidden">
         <img
           src={artwork.image_url}
           alt={artwork.title}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105"
+          style={{ maxHeight: '420px', minHeight: '200px' }}
           loading="lazy"
         />
+      </div>
         
         {/* Overlay: Opacity 0 on desktop hover, but manageable on mobile */}
         <div className="absolute inset-0 bg-ink/75 opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3 p-4 md:p-6">

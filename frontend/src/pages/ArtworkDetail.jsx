@@ -37,7 +37,8 @@ export default function ArtworkDetail() {
           <img
             src={artwork.image_url}
             alt={artwork.title}
-            className="max-w-full max-h-[60vh] lg:max-h-full object-contain shadow-[0_20px_40px_rgba(0,0,0,.1)] md:shadow-[0_40px_80px_rgba(0,0,0,.15)]"
+            className="w-full h-auto object-contain shadow-[0_40px_80px_rgba(0,0,0,.15)]"
+            style={{ maxHeight: 'calc(100vh - 120px)' }}
           />
         </div>
 
