@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  body {
+    @apply font-sans text-ink bg-white antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-serif font-light;
+  }
+}
+ 
+@layer utilities {
+  .tracking-widest-xl { letter-spacing: .2em; }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2px;
+  }
+}
