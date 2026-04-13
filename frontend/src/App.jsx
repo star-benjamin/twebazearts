@@ -11,15 +11,33 @@ import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import ArtistDashboard from './pages/artist/Dashboard';
 import AdminDashboard from './pages/admin/AdminDashboard';
- 
+
 function ProtectedRoute({ children, role }) {
-  const { user, loading } = useAuth();
-  if (loading) return <div className="min-h-screen flex items-center justify-center"><span className="font-serif text-2xl text-stone-300">Loading…</span></div>;
+  const { user, profile, loading } = useAuth();
+
+  // Wait for auth to initialize
+  if (loading) return (
+    <div className="min-h-screen flex items-center justify-center">
+      <span className="font-serif text-2xl text-stone-300">Loading…</span>
+    </div>
+  );
+
+  // No user — go to login
   if (!user) return <Navigate to="/login" replace />;
-  if (role && user.role !== role) return <Navigate to="/" replace />;
+
+  // User exists but profile not loaded yet — keep waiting
+  if (!profile) return (
+    <div className="min-h-screen flex items-center justify-center">
+      <span className="font-serif text-2xl text-stone-300">Loading…</span>
+    </div>
+  );
+
+  // Wrong role — go home
+  if (role && profile.role !== role) return <Navigate to="/" replace />;
+
   return children;
 }
- 
+
 export default function App() {
   return (
     <AuthProvider>
@@ -32,8 +50,20 @@ export default function App() {
           <Route path="/about"       element={<About />} />
           <Route path="/login"       element={<Login />} />
           <Route path="/register"    element={<Register />} />
-          <Route path="/dashboard/*" element={<ProtectedRoute role="ARTIST"><ArtistDashboard /></ProtectedRoute>} />
-          <Route path="/admin/*"     element={<ProtectedRoute role="ADMIN"><AdminDashboard /></ProtectedRoute>} />
+          <Route path="/dashboard/*"
+            element={
+              <ProtectedRoute role="ARTIST">
+                <ArtistDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/admin/*"
+            element={
+              <ProtectedRoute role="ADMIN">
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
         <Footer />
       </BrowserRouter>
