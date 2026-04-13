@@ -86,7 +86,7 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-ash h-16">
       <div className="max-w-7xl mx-auto h-full flex items-center justify-between px-6 md:px-10">
         <Link to="/" className="font-serif text-xl font-light tracking-wide">
-          TWEBAZE<span className="text-gold">arts</span>
+          TWEBAZE<span className="text-gold">Art</span>Studio
         </Link>
 
         {/* Desktop Navigation */}

@@ -1,54 +1,117 @@
-const VALUES = [
-  { title: 'Curation over volume', desc: 'Every artist is hand-selected by our editorial team. Quality is the only metric.' },
-  { title: 'Artist-first model',   desc: 'Artists keep 100% of their sale. We earn through optional premium listings.' },
-  { title: 'Human transactions',   desc: 'No cart, no checkout. Every purchase begins with a conversation.' },
-  { title: 'East African identity',desc: 'We are unapologetically local. Our aesthetic is our heritage.' },
-];
-
 export default function About() {
   return (
     <div className="pt-16">
-      {/* Main Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 px-6 md:px-10 lg:px-16 py-12 lg:py-20 items-center">
-        
-        {/* Decorative Image Placeholder */}
-        <div className="relative order-first lg:order-none px-4 lg:px-0">
-          <div className="w-full aspect-[4/5] bg-gradient-to-br from-stone to-ink rounded-sm shadow-xl" />
-          {/* Subtle background element - hidden on very small screens to avoid overflow */}
-          <div className="absolute -bottom-4 -right-4 md:-bottom-5 md:-right-5 w-3/5 aspect-square bg-gold/10 -z-10" />
+
+      {/* Hero Statement */}
+      <div className="px-6 md:px-10 lg:px-16 py-16 lg:py-24 max-w-4xl">
+        <p className="text-[10px] md:text-[11px] tracking-[.2em] uppercase text-gold mb-6">
+          Kampala, Uganda
+        </p>
+        <h1 className="font-serif text-[clamp(36px,5vw,72px)] font-light leading-[1.05] mb-0">
+          Welcome to<br /><em>Twebaze Art Studio</em>
+        </h1>
+      </div>
+
+      {/* Divider */}
+      <div className="w-full h-px bg-ash" />
+
+      {/* Main Content */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+
+        {/* Left — Sticky image */}
+        <div className="relative lg:sticky lg:top-16 lg:h-[calc(100vh-64px)] bg-smoke flex items-center justify-center p-10 lg:p-16 order-last lg:order-first">
+          <div className="relative w-full max-w-sm">
+            <div className="w-full aspect-[4/5] bg-gradient-to-br from-stone/40 via-ink/60 to-ink rounded-sm shadow-2xl" />
+            <div className="absolute -bottom-4 -right-4 w-2/3 aspect-square bg-gold/10 -z-10" />
+            <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-sm px-4 py-3">
+              <div className="font-serif text-sm">Twebaze Art Studio</div>
+              <div className="text-[10px] tracking-widest uppercase text-stone mt-0.5">Kampala · Uganda</div>
+            </div>
+          </div>
         </div>
 
-        {/* Text Content */}
-        <div>
-          <p className="text-[10px] md:text-[11px] tracking-[.2em] uppercase text-gold mb-4 md:mb-5 text-center lg:text-left">
-            Our Mission
-          </p>
-          <h2 className="font-serif text-[clamp(28px,4vw,48px)] font-light leading-tight mb-6 md:mb-7 text-center lg:text-left">
-            A gallery without <em>walls</em>, with purpose
-          </h2>
-          
-          <div className="space-y-5 mb-10 text-center lg:text-left">
-            <p className="text-[14px] md:text-sm text-stone leading-[1.8]">
-              TWEBAZEarts was founded with a simple belief: Ugandan art deserves a platform as refined as the work itself.
-              We are a curated digital gallery connecting collectors and art lovers with the continent's most compelling visual artists.
-            </p>
-            <p className="text-[14px] md:text-sm text-stone leading-[1.8]">
-              We don't process transactions. We create connections. Every inquiry travels through WhatsApp, keeping commerce
-              warm and conversations human.
+        {/* Right — Text */}
+        <div className="px-6 md:px-10 lg:px-16 py-16 lg:py-24 space-y-16">
+
+          {/* Section 1 — Identity */}
+          <div>
+            <p className="text-[10px] tracking-[.2em] uppercase text-gold mb-6">The Studio</p>
+            <p className="text-sm md:text-[15px] text-stone leading-[1.9]">
+              Twebaze Art Studio is a space where the boundaries between disciplines dissolve
+              to redefine the essence of the contemporary canvas. Driven by a commitment to
+              archival excellence and original thought, the studio produces works that are as
+              enduring in physical form as they are in conceptual depth.
             </p>
           </div>
 
-          {/* Values Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-8 md:gap-y-10">
-            {VALUES.map(v => (
-              <div key={v.title} className="text-center lg:text-left">
-                <div className="font-serif text-base md:text-lg mb-1.5">{v.title}</div>
-                <div className="text-[12px] md:text-xs text-stone leading-relaxed max-w-xs mx-auto lg:mx-0">
-                  {v.desc}
-                </div>
-              </div>
-            ))}
+          {/* Pullquote */}
+          <div className="border-l-2 border-gold pl-8 py-2">
+            <p className="font-serif text-[clamp(20px,2.5vw,28px)] font-light leading-[1.3] text-ink">
+              "Art is not merely a visual experience — it is a tactile journey."
+            </p>
           </div>
+
+          {/* Section 2 — Practice */}
+          <div>
+            <p className="text-[10px] tracking-[.2em] uppercase text-gold mb-6">The Practice</p>
+            <p className="text-sm md:text-[15px] text-stone leading-[1.9]">
+              By integrating sculptural textures — from raw gravel to heavy cotton canvas —
+              each piece evolves into a three-dimensional object that challenges the flat
+              tradition of painting. Every creation is a complex synthesis of rhythm, poetry,
+              and form, bridging the gap between fine art, pottery, and the written word.
+            </p>
+          </div>
+
+          {/* Section 3 — Philosophy */}
+          <div>
+            <p className="text-[10px] tracking-[.2em] uppercase text-gold mb-6">The Philosophy</p>
+            <p className="text-sm md:text-[15px] text-stone leading-[1.9]">
+              At the heart of the studio's philosophy is a rejection of the ephemeral.
+              We believe in the mastery of materials and the power of satire to reflect
+              the intricacies of modern life — high-end craftsmanship meeting sharp social
+              commentary, designed for the discerning collector who values art that stands
+              the test of time.
+            </p>
+          </div>
+
+          {/* Pillars */}
+          <div>
+            <p className="text-[10px] tracking-[.2em] uppercase text-gold mb-8">Studio Pillars</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+              {[
+                { title: 'Archival Excellence', desc: 'Every material chosen to endure. Every finish crafted to outlast trends and time.' },
+                { title: 'Sculptural Texture',  desc: 'Raw gravel, heavy cotton, found objects — the canvas becomes three-dimensional.' },
+                { title: 'Conceptual Depth',    desc: 'Rhythm, poetry, and form synthesised into works that reward repeated contemplation.' },
+                { title: 'Satire & Commentary', desc: 'Sharp social observation woven into beauty — art that provokes as much as it pleases.' },
+              ].map(v => (
+                <div key={v.title} className="border-t border-ash pt-6">
+                  <div className="font-serif text-base md:text-lg mb-2">{v.title}</div>
+                  <div className="text-xs text-stone leading-relaxed">{v.desc}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* CTA */}
+          <div className="border-t border-ash pt-10 flex flex-col sm:flex-row gap-4">
+            <a
+            
+              href="https://wa.me/256700000000?text=Hello%2C%20I%27d%20like%20to%20learn%20more%20about%20Twebaze%20Art%20Studio."
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center gap-2.5 bg-[#25d366] text-white px-8 py-4 text-[11px] tracking-widest uppercase hover:bg-[#128c7e] transition-colors"
+            >
+              Connect on WhatsApp
+            </a>
+            <a
+            
+              href="/"
+              className="inline-flex items-center justify-center px-8 py-4 border border-ink text-ink text-[11px] tracking-widest uppercase hover:bg-ink hover:text-white transition-colors"
+            >
+              View the Collection
+            </a>
+          </div>
+
         </div>
       </div>
     </div>
