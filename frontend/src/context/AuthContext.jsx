@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
+import client from '../api/client';  // your axios instance
  
 const AuthContext = createContext(null);
  
@@ -8,43 +9,29 @@ export function AuthProvider({ children }) {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
  
-  const fetchProfile = async (userId) => {
-    const { data } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', userId)
-      .single();
-    setProfile(data);
-    return data;
-  };
- 
+  // Listen for Supabase auth state changes
   useEffect(() => {
-    // Restore existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) {
-        setUser(session.user);
-        fetchProfile(session.user.id).finally(() => setLoading(false));
-        localStorage.setItem('token', session.access_token);
-      } else {
-        setLoading(false);
-      }
-    });
- 
-    // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         if (session?.user) {
           setUser(session.user);
-          fetchProfile(session.user.id);
+          // Fetch profile (role, status, etc.)
+          const { data } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', session.user.id)
+            .single();
+          setProfile(data);
+          // Store token for axios requests to Express
           localStorage.setItem('token', session.access_token);
         } else {
           setUser(null);
           setProfile(null);
           localStorage.removeItem('token');
         }
+        setLoading(false);
       }
     );
- 
     return () => subscription.unsubscribe();
   }, []);
  
@@ -56,9 +43,7 @@ export function AuthProvider({ children }) {
  
   const register = async (email, password, name) => {
     const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: { data: { name, role: 'ARTIST' } },
+      email, password, options: { data: { name } }
     });
     if (error) throw error;
     return data;
@@ -68,12 +53,8 @@ export function AuthProvider({ children }) {
     await supabase.auth.signOut();
   };
  
-  const isAdmin  = profile?.role === 'ADMIN';
-  const isArtist = profile?.role === 'ARTIST';
-  const isApproved = profile?.status === 'APPROVED';
- 
   return (
-    <AuthContext.Provider value={{ user, profile, login, register, logout, loading, isAdmin, isArtist, isApproved }}>
+    <AuthContext.Provider value={{ user, profile, login, register, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
