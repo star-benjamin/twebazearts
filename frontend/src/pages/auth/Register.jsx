@@ -43,7 +43,7 @@ export default function Register() {
   return (
     <div className="min-h-screen pt-16 flex items-center justify-center bg-smoke px-4 md:px-6">
       <div className="w-full max-w-sm bg-white p-8 md:p-10 shadow-sm md:shadow-none">
-        <h1 className="font-serif text-3xl font-light mb-1">Join TWEBAZEarts</h1>
+        <h1 className="font-serif text-3xl font-light mb-1">Join Twebaze Art Studio</h1>
         <p className="text-[11px] md:text-xs text-stone tracking-wide mb-8">Apply to showcase your work</p>
 
         {error && (

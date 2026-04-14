@@ -27,7 +27,7 @@ export default function Login() {
     <div className="min-h-screen pt-16 flex items-center justify-center bg-smoke px-4 md:px-6">
       <div className="w-full max-w-sm bg-white p-8 md:p-10 shadow-sm md:shadow-none">
         <h1 className="font-serif text-3xl font-light mb-1">Welcome back</h1>
-        <p className="text-[11px] md:text-xs text-stone tracking-wide mb-8">Sign in to your TWEBAZEarts account</p>
+        <p className="text-[11px] md:text-xs text-stone tracking-wide mb-8">Sign in to your Twebaze Art Studio account</p>
 
         {error && (
           <div className="bg-red-50 border border-red-100 text-red-700 text-[11px] p-3 mb-6 animate-in fade-in duration-300">

@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-10 mb-16 lg:mb-12">
         <div className="sm:col-span-2 lg:col-span-1">
           <div className="font-serif text-2xl font-light mb-3">
-            TWEBAZE<span className="text-gold">arts</span>
+            TWEBAZE<span className="text-gold">Art</span>Studio
           </div>
           <p className="text-xs text-mist leading-relaxed max-w-sm">
             A curated marketplace for Ugandan visual artists. Inquiries happen over WhatsApp — keeping commerce human.
@@ -32,7 +32,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row justify-between gap-4 text-[11px] text-stone text-center md:text-left">
-        <span>© {new Date().getFullYear()} TWEBAZEarts. All rights reserved.</span>
+        <span>© {new Date().getFullYear()} TwebazeArtStudio. All rights reserved.</span>
         <span className="italic">Built for African art, by Africans.</span>
       </div>
     </footer>
