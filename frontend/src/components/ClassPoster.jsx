@@ -138,7 +138,7 @@ export default function ClassPoster({ cls, onBook }) {
 
         <line x1="40" y1="875" x2="640" y2="875" stroke="#c8c3bb" strokeWidth="0.5" />
         <text x="40" y="898" fontFamily="Georgia, serif" fontSize="12" letterSpacing="3" fill={palette.text}>TWEBAZE ART STUDIO</text>
-        <text x="640" y="898" textAnchor="end" fontFamily="Georgia, serif" fontSize="12" fill={palette.accent}>twebazearts.online/classes</text>
+        <text x="640" y="898" textAnchor="end" fontFamily="Georgia, serif" fontSize="14" fill={palette.accent}>twebazearts.online/classes</text>
       </svg>
 
       {/* Overlay actions — outside the SVG so they're normal clickable DOM */}

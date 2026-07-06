@@ -27,7 +27,7 @@ export default function AdminLayout({ children }) {
       <aside className="hidden lg:flex w-60 bg-ink flex-shrink-0 sticky top-16 h-[calc(100vh-64px)] flex-col">
         <div className="px-6 py-8 border-b border-white/5">
           <div className="font-serif text-lg text-white font-light">Admin Panel</div>
-          <div className="text-[11px] text-stone mt-1">Single-admin access</div>
+        
         </div>
         <nav className="flex-1 px-3 py-4 overflow-y-auto">
           {NAV.map(({ to, label, icon: Icon }) => (

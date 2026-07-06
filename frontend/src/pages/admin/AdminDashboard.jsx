@@ -43,10 +43,10 @@ export default function AdminDashboard() {
         ))}
       </div>
 
-      <p className="text-xs text-stone">
+      {/* <p className="text-xs text-stone">
         Artwork view counts require wiring up a view-tracking column — see the note in
         <code className="mx-1 bg-white px-1.5 py-0.5 border border-ash">admin.controller.js</code>.
-      </p>
+      </p> */}
     </AdminLayout>
   );
 }
