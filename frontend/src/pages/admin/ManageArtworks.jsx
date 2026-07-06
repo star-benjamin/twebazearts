@@ -17,8 +17,10 @@ export default function ManageArtworks() {
   const [editing, setEditing] = useState(null); // artwork object or 'new' or null
 
   const { data } = useQuery({ queryKey: ['admin-artworks'], queryFn: () => artworkApi.list({ admin: '1', limit: 100 }) });
-  const { data: artists = [] } = useQuery({ queryKey: ['artists', 'admin'], queryFn: () => artistApi.list({ admin: '1' }) });
-  const { data: categories = [] } = useQuery({ queryKey: ['artwork-categories'], queryFn: () => artworkApi.listCategories() });
+  const { data: artistsRaw } = useQuery({ queryKey: ['artists', 'admin'], queryFn: () => artistApi.list({ admin: '1' }) });
+  const { data: categoriesRaw } = useQuery({ queryKey: ['artwork-categories'], queryFn: () => artworkApi.listCategories() });
+  const artists = Array.isArray(artistsRaw) ? artistsRaw : [];
+  const categories = Array.isArray(categoriesRaw) ? categoriesRaw : [];
 
   const removeMutation = useMutation({
     mutationFn: artworkApi.remove,
@@ -36,7 +38,7 @@ export default function ManageArtworks() {
     onError: (err) => alert(err.response?.data?.error || 'Failed to update visibility'),
   });
 
-  const artworks = data?.items || [];
+  const artworks = Array.isArray(data?.items) ? data.items : [];
 
   return (
     <AdminLayout>
@@ -106,6 +108,12 @@ export default function ManageArtworks() {
 }
 
 function ArtworkEditor({ artwork, artists, categories, onClose, onSaved }) {
+  // `savedArtwork` starts as whatever was passed in (existing artwork being
+  // edited, or null for a brand-new one). Once a new artwork is created, we
+  // store the server's response here so the same modal can flip straight
+  // into "attach images" mode instead of closing and asking the admin to
+  // reopen it.
+  const [savedArtwork, setSavedArtwork] = useState(artwork);
   const [form, setForm] = useState(artwork ? {
     title: artwork.title || '', medium: artwork.medium || '', style: artwork.style || '',
     story: artwork.story || '', artist_ref_id: artwork.artist_ref_id || '', category_id: artwork.category_id || '',
@@ -127,17 +135,17 @@ function ArtworkEditor({ artwork, artists, categories, onClose, onSaved }) {
     if (!['image/jpeg', 'image/jpg', 'image/png', 'image/webp'].includes(file.type)) {
       return setError('Only JPG, PNG, or WebP images are accepted.');
     }
-    if (!artwork) return setError('Save the artwork once before uploading images.');
+    if (!savedArtwork) return setError('Save the artwork once before uploading images.');
 
     setUploading(true);
     setError(null);
     try {
-      const path = `${artwork.id}/${Date.now()}-${file.name}`;
+      const path = `${savedArtwork.id}/${Date.now()}-${file.name}`;
       const { error: uploadErr } = await supabase.storage.from('artworks').upload(path, file, { cacheControl: '3600' });
       if (uploadErr) throw uploadErr;
       const { data: { publicUrl } } = supabase.storage.from('artworks').getPublicUrl(path);
 
-      const saved = await artworkApi.addImage(artwork.id, {
+      const saved = await artworkApi.addImage(savedArtwork.id, {
         url: publicUrl, is_primary: images.length === 0, mime_type: file.type, size_bytes: file.size,
       });
       setImages((imgs) => [...imgs, saved]);
@@ -149,8 +157,8 @@ function ArtworkEditor({ artwork, artists, categories, onClose, onSaved }) {
   };
 
   const removeImage = async (imageId) => {
-    if (!artwork) return;
-    await artworkApi.removeImage(artwork.id, imageId);
+    if (!savedArtwork) return;
+    await artworkApi.removeImage(savedArtwork.id, imageId);
     setImages((imgs) => imgs.filter((i) => i.id !== imageId));
   };
 
@@ -167,12 +175,15 @@ function ArtworkEditor({ artwork, artists, categories, onClose, onSaved }) {
       payload.category_id = payload.category_id || null;
       payload.creation_date = payload.creation_date || null;
 
-      if (artwork) {
-        await artworkApi.update(artwork.id, payload);
+      if (savedArtwork) {
+        await artworkApi.update(savedArtwork.id, payload);
+        onSaved();
       } else {
-        await artworkApi.create(payload);
+        // First save of a brand-new artwork: create it, then drop into
+        // image-upload mode in the same modal instead of closing.
+        const created = await artworkApi.create(payload);
+        setSavedArtwork(created);
       }
-      onSaved();
     } catch (err) {
       setError(err.response?.data?.error || 'Save failed');
     } finally {
@@ -184,13 +195,13 @@ function ArtworkEditor({ artwork, artists, categories, onClose, onSaved }) {
     <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4" onClick={onClose}>
       <div onClick={(e) => e.stopPropagation()} className="bg-white w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 md:p-8">
         <div className="flex justify-between items-center mb-6">
-          <h3 className="font-serif text-2xl">{artwork ? 'Edit Artwork' : 'New Artwork'}</h3>
+          <h3 className="font-serif text-2xl">{savedArtwork ? 'Edit Artwork' : 'New Artwork'}</h3>
           <button onClick={onClose}><X size={20} /></button>
         </div>
 
-        {!artwork && (
-          <p className="text-xs text-stone bg-smoke p-3 mb-4">
-            Save the artwork first, then reopen it to attach images (FR-ART-004).
+        {artwork == null && savedArtwork && (
+          <p className="text-xs text-emerald-700 bg-emerald-50 p-3 mb-4">
+            Artwork created. Now add at least one image and confirm the story field before publishing (BR-ART-001).
           </p>
         )}
 
@@ -232,33 +243,40 @@ function ArtworkEditor({ artwork, artists, categories, onClose, onSaved }) {
             <input type="number" placeholder="Cost Basis (internal)" value={form.cost_basis} onChange={set('cost_basis')} min="0" className="border border-ash px-3 py-2 text-sm" />
           </div>
 
-          {artwork && (
-            <div>
-              <label className="block text-[10px] tracking-widest uppercase text-stone mb-2">Images</label>
-              <div className="flex flex-wrap gap-3 mb-3">
-                {images.map((img) => (
-                  <div key={img.id} className="relative w-20 h-20">
-                    <img src={img.url} className="w-full h-full object-cover" alt="" />
-                    <button type="button" onClick={() => removeImage(img.id)} className="absolute -top-2 -right-2 bg-white rounded-full border border-ash">
-                      <X size={14} />
-                    </button>
-                    {img.is_primary && <span className="absolute bottom-0 left-0 bg-gold text-white text-[8px] px-1">Primary</span>}
-                  </div>
-                ))}
-              </div>
-              <label className="flex items-center gap-2 text-xs text-stone cursor-pointer border border-dashed border-ash p-3 w-fit">
-                <Upload size={14} /> {uploading ? 'Uploading…' : 'Upload image (max 15MB)'}
-                <input type="file" accept="image/jpeg,image/png,image/webp" onChange={handleUpload} disabled={uploading} className="hidden" />
-              </label>
-            </div>
-          )}
-
           {error && <p className="text-xs text-red-600">{error}</p>}
 
           <button type="submit" disabled={saving} className="w-full bg-ink text-white py-3 text-[11px] tracking-widest uppercase hover:bg-gold disabled:opacity-50">
-            {saving ? 'Saving…' : 'Save Artwork'}
+            {saving ? 'Saving…' : savedArtwork ? 'Save Changes' : 'Create Artwork & Continue to Images'}
           </button>
         </form>
+
+        {savedArtwork && (
+          <div className="mt-6 pt-6 border-t border-ash">
+            <label className="block text-[10px] tracking-widest uppercase text-stone mb-2">Images (FR-ART-004)</label>
+            <div className="flex flex-wrap gap-3 mb-3">
+              {images.map((img) => (
+                <div key={img.id} className="relative w-20 h-20">
+                  <img src={img.url} className="w-full h-full object-cover" alt="" />
+                  <button type="button" onClick={() => removeImage(img.id)} className="absolute -top-2 -right-2 bg-white rounded-full border border-ash">
+                    <X size={14} />
+                  </button>
+                  {img.is_primary && <span className="absolute bottom-0 left-0 bg-gold text-white text-[8px] px-1">Primary</span>}
+                </div>
+              ))}
+            </div>
+            <label className="flex items-center gap-2 text-xs text-stone cursor-pointer border border-dashed border-ash p-3 w-fit mb-4">
+              <Upload size={14} /> {uploading ? 'Uploading…' : 'Upload image (max 15MB)'}
+              <input type="file" accept="image/jpeg,image/png,image/webp" onChange={handleUpload} disabled={uploading} className="hidden" />
+            </label>
+
+            <button
+              onClick={onSaved}
+              className="w-full border border-ink text-ink py-3 text-[11px] tracking-widest uppercase hover:bg-ink hover:text-white transition-colors"
+            >
+              Done
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
