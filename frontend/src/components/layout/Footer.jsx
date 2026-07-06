@@ -31,7 +31,7 @@ export default function Footer() {
               TWEBAZE<span className="text-gold">Art</span>Studio
             </div>
             <p className="text-xs text-mist leading-relaxed max-w-sm">
-              A curated marketplace for Ugandan visual artists. Inquiries happen over WhatsApp — keeping commerce human.
+              A curated marketplace for Ugandan visual artists.
             </p>
           </div>
 
