@@ -54,7 +54,7 @@ export default function Footer() {
 
         <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row justify-between gap-4 text-[11px] text-stone text-center md:text-left">
           <span>© {new Date().getFullYear()} TwebazeArtStudio. All rights reserved.</span>
-          <span className="italic">Built for African art, by Africans.</span>
+          <span className="italic">Built with Love.</span>
         </div>
       </div>
     </footer>
