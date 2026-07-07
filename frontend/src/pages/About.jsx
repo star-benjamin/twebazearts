@@ -96,7 +96,7 @@ export default function About() {
           <div className="border-t border-ash pt-10 flex flex-col sm:flex-row gap-4">
             <a
             
-              href="https://wa.me/256700000000?text=Hello%2C%20I%27d%20like%20to%20learn%20more%20about%20Twebaze%20Art%20Studio."
+              href="https://wa.me/256751482035?text=Hello%2C%20I%27d%20like%20to%20learn%20more%20about%20Twebaze%20Art%20Studio."
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center justify-center gap-2.5 bg-[#25d366] text-white px-8 py-4 text-[11px] tracking-widest uppercase hover:bg-[#128c7e] transition-colors"
