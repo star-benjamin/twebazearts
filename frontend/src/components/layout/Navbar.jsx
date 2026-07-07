@@ -52,11 +52,11 @@ export default function Navbar() {
         // No "Join as Artist" / register link anymore — BR-GEN-001 forbids
         // self-registration of any account. This Sign In is for the admin only.
         <Link
-          to="/login"
-          onClick={() => setIsOpen(false)}
-          className={`text-xs tracking-widest uppercase transition-colors ${active('/login')}`}
+          // to="/login"
+          // onClick={() => setIsOpen(false)}
+          // className={`text-xs tracking-widest uppercase transition-colors ${active('/login')}`}
         >
-          Admin Sign In
+          {/* Admin Sign In */}
         </Link>
       )}
     </>
