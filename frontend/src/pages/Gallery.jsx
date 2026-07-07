@@ -35,10 +35,10 @@ export default function Gallery() {
             Kampala · East Africa
           </p>
           <h1 className="font-serif text-[clamp(42px,8vw,88px)] leading-[1.1] md:leading-[1.05] font-light mb-6 md:mb-8">
-            Art that<br /><em className="text-stone italic">speaks</em><br />across walls
+            Stories told in<br /><em className="text-stone italic">canvas</em><br />and stone
           </h1>
           <p className="text-[14px] md:text-[15px] text-stone max-w-sm leading-[1.8] mb-10 md:mb-12 mx-auto lg:mx-0">
-            Curated, authentic Ugandan art with verified provenance and descriptive storytelling.
+            A carefully curated collection of authentic Ugandan fine art, original cultural narratives, and hands-on workshops led directly by practicing studio artists.
           </p>
           <div className="flex justify-center lg:justify-start gap-4">
             <a href="#gallery" className="bg-ink text-white px-8 py-3.5 text-[11px] tracking-widest uppercase hover:bg-gold transition-colors w-full sm:w-auto">
