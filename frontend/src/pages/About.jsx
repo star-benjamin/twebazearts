@@ -21,8 +21,21 @@ export default function About() {
         {/* Left — Sticky image */}
         <div className="relative lg:sticky lg:top-16 lg:h-[calc(100vh-64px)] bg-smoke flex items-center justify-center p-10 lg:p-16 order-last lg:order-first">
           <div className="relative w-full max-w-sm">
-            <div className="w-full aspect-[4/5] bg-gradient-to-br from-stone/40 via-ink/60 to-ink rounded-sm shadow-2xl" />
+            {/* offset gold panel behind */}
             <div className="absolute -bottom-4 -right-4 w-2/3 aspect-square bg-gold/10 -z-10" />
+
+            {/* actual image, replacing the gradient placeholder */}
+            <div className="relative w-full aspect-[4/5] rounded-sm shadow-2xl overflow-hidden">
+              <img
+                src="/about.PNG"
+                alt="Twebaze Art Studio"
+                className="w-full h-full object-cover"
+              />
+              {/* gradient wash for caption legibility + tying back to the old palette */}
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent" />
+            </div>
+
+            {/* caption card */}
             <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-sm px-4 py-3">
               <div className="font-serif text-sm">Twebaze Art Studio</div>
               <div className="text-[10px] tracking-widest uppercase text-stone mt-0.5">Kampala · Uganda</div>
@@ -95,7 +108,6 @@ export default function About() {
           {/* CTA */}
           <div className="border-t border-ash pt-10 flex flex-col sm:flex-row gap-4">
             <a
-            
               href="https://wa.me/256751482035?text=Hello%2C%20I%27d%20like%20to%20learn%20more%20about%20Twebaze%20Art%20Studio."
               target="_blank"
               rel="noreferrer"
