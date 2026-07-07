@@ -12,9 +12,9 @@ export default function Navbar() {
 
   const links = [
     ['/', 'Gallery'],
-    ['/artists', 'Artists'],
-    ['/classes', 'Classes'],
+    // ['/artists', 'Artists'],
     ['/commission', 'Commissions'],
+    ['/classes', 'Classes'],
     ['/blog', 'Journal'],
     ['/about', 'About'],
   ];
