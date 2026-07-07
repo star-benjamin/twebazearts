@@ -29,7 +29,7 @@ export default function Gallery() {
   return (
     <>
       {/* Hero */}
-      <section className="min-h-[calc(100vh-64px)] grid grid-cols-1 lg:grid-cols-2 pt-16">
+      <section className="min-h-[calc(100vh-64px)] grid grid-cols-1 lg:grid-cols-2 pt-13">
         <div className="flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-12 lg:py-20 text-center lg:text-left">
           <p className="text-[10px] md:text-[11px] tracking-[.2em] uppercase text-gold mb-4 md:mb-6">
             Kampala · East Africa
