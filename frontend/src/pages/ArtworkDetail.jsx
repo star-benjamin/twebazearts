@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { Home, ArrowLeft } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { artworkApi } from '../api/artwork.api';
-import ViewInRoom from '../components/ViewInRoom';
+import ArtworkPreview from '../components/artwork-detail/ArtworkPreview';
+import SizeBadge from '../components/ui/SizeBadge';
 import InquiryForm from '../components/InquiryForm';
 
 export default function ArtworkDetail() {
   const { id } = useParams();
-  const [showRoom, setShowRoom] = useState(false);
   const [showInquiry, setShowInquiry] = useState(false);
 
   const { data: artwork, isLoading } = useQuery({
@@ -35,19 +35,8 @@ export default function ArtworkDetail() {
   return (
     <>
       <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen pt-16">
-        {/* Left — Image */}
-        <div className="lg:sticky lg:top-16 lg:h-[calc(100vh-64px)] bg-smoke flex items-center justify-center p-6 md:p-12">
-          {primaryImage ? (
-            <img
-              src={primaryImage.webp_url || primaryImage.url}
-              alt={artwork.title}
-              className="w-full h-auto object-contain shadow-[0_40px_80px_rgba(0,0,0,.15)]"
-              style={{ maxHeight: 'calc(100vh - 120px)' }}
-            />
-          ) : (
-            <div className="text-mist text-xs uppercase tracking-widest">No image available</div>
-          )}
-        </div>
+        {/* Left — Preview: swaps between Artwork / Room / Furniture / Person without navigating away */}
+        <ArtworkPreview artwork={artwork} imageUrl={primaryImage?.webp_url || primaryImage?.url} />
 
         {/* Right — Info */}
         <div className="px-6 md:px-10 lg:px-14 py-10 md:py-16">
@@ -68,7 +57,10 @@ export default function ArtworkDetail() {
             </Link>
           )}
 
-          <h1 className="font-serif text-[clamp(24px,4vw,44px)] font-light leading-tight mb-5">{artwork.title}</h1>
+          <div className="flex items-center gap-3 mb-5">
+            <h1 className="font-serif text-[clamp(24px,4vw,44px)] font-light leading-tight">{artwork.title}</h1>
+            <SizeBadge artwork={artwork} />
+          </div>
 
           <div className="flex flex-wrap gap-x-8 gap-y-4 py-6 border-y border-ash mb-8">
             {[
@@ -111,17 +103,9 @@ export default function ArtworkDetail() {
             ) : (
               <InquiryForm artworkId={artwork.id} defaultClassification="ARTWORK_PURCHASE" />
             )}
-            <button
-              onClick={() => setShowRoom(true)}
-              className="flex items-center justify-center gap-2.5 border border-ink text-ink py-4 text-[11px] md:text-[12px] tracking-widest uppercase hover:bg-ink hover:text-white transition-colors"
-            >
-              <Home size={15} /> View in Room
-            </button>
           </div>
         </div>
       </div>
-
-      {showRoom && <ViewInRoom artwork={artwork} onClose={() => setShowRoom(false)} />}
     </>
   );
 }

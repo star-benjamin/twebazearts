@@ -57,7 +57,7 @@ export default function Navbar() {
           // className={`text-xs tracking-widest uppercase transition-colors ${active('/login')}`}
         >
           {/* Admin Sign In */}
-        </Link>
+      </Link>
       )}
     </>
   );

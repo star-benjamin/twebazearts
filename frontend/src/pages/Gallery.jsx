@@ -2,13 +2,11 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { artworkApi } from '../api/artwork.api';
 import ArtCard from '../components/ArtCard';
-import ViewInRoom from '../components/ViewInRoom';
 
 export default function Gallery() {
   const [categoryId, setCategoryId] = useState('');
   const [availability, setAvailability] = useState('');
   const [q, setQ] = useState('');
-  const [roomArtwork, setRoomArtwork] = useState(null);
 
   const { data: categories = [] } = useQuery({
     queryKey: ['artwork-categories'],
@@ -103,12 +101,10 @@ export default function Gallery() {
               No artworks match your search.
             </div>
           ) : (
-            artworks.map((a) => <ArtCard key={a.id} artwork={a} onViewInRoom={setRoomArtwork} />)
+            artworks.map((a) => <ArtCard key={a.id} artwork={a} />)
           )}
         </div>
       </section>
-
-      <ViewInRoom artwork={roomArtwork} onClose={() => setRoomArtwork(null)} />
     </>
   );
 }

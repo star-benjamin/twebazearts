@@ -1,18 +1,21 @@
 import { Link } from 'react-router-dom';
-import { Expand } from 'lucide-react';
+import SizeBadge from './ui/SizeBadge';
 
-export default function ArtCard({ artwork, onViewInRoom }) {
+export default function ArtCard({ artwork }) {
   const primaryImage = artwork.images?.find((i) => i.is_primary) || artwork.images?.[0];
   const imageUrl = primaryImage?.webp_url || primaryImage?.url;
 
   return (
-    <div className="group relative bg-white overflow-hidden cursor-pointer border border-transparent hover:border-ash transition-colors">
+    <Link
+      to={`/artwork/${artwork.id}`}
+      className="group relative bg-white overflow-hidden border border-transparent hover:border-ash transition-colors block"
+    >
       <div className="relative aspect-[3/4] overflow-hidden bg-smoke">
         {imageUrl ? (
           <img
             src={imageUrl}
             alt={artwork.title}
-            className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105"
+            className="w-full h-auto object-contain transition-transform duration-700 ease-out group-hover:scale-[1.03]"
             style={{ maxHeight: '420px', minHeight: '200px' }}
             loading="lazy"
           />
@@ -22,37 +25,22 @@ export default function ArtCard({ artwork, onViewInRoom }) {
           </div>
         )}
 
-        <div className="absolute inset-0 bg-ink/75 opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3 p-4 md:p-6">
-          <Link
-            to={`/artwork/${artwork.id}`}
-            className="w-full text-center py-2.5 bg-white text-ink text-[10px] md:text-[11px] tracking-widest uppercase hover:bg-gold hover:text-white transition-colors"
-          >
-            View Work
-          </Link>
-
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onViewInRoom?.(artwork);
-            }}
-            className="flex items-center gap-2 text-white/60 text-[10px] tracking-widest uppercase mt-1 hover:text-white transition-colors"
-          >
-            <Expand size={11} /> View in Room
-          </button>
-        </div>
-
         {artwork.tracking_status && artwork.tracking_status !== 'AVAILABLE' && (
           <span className="absolute top-3 left-3 bg-ink text-white text-[9px] tracking-widest uppercase px-2 py-1">
             {artwork.tracking_status}
           </span>
         )}
+
+        <span className="absolute top-3 right-3">
+          <SizeBadge artwork={artwork} className="bg-white/90 border-transparent" />
+        </span>
       </div>
 
       <div className="p-4 md:p-5 pb-6">
         <p className="text-[9px] md:text-[10px] tracking-[.12em] uppercase text-stone mb-1">
           {artwork.artist?.full_name || 'Twebaze Art Studio'}
         </p>
-        <h3 className="font-serif text-base md:text-lg leading-tight mb-2 truncate">
+        <h3 className="font-serif text-base md:text-lg leading-tight mb-2 truncate group-hover:text-gold transition-colors">
           {artwork.title}
         </h3>
         <div className="flex justify-between items-center gap-2">
@@ -65,6 +53,6 @@ export default function ArtCard({ artwork, onViewInRoom }) {
           </span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
