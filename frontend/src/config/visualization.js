@@ -35,31 +35,31 @@ export const ROOM_SCENES = [
   {
     key: 'living_room',
     label: 'Living Room',
-    image: '/rooms/living-room.jpg',
+    image: '/rooms/living-room1.jpg',
     referenceHeightCm: 210,
     referenceLabel: 'Standard 210cm doorway',
   },
   {
     key: 'bedroom',
     label: 'Bedroom',
-    image: '/rooms/bedroom.jpg',
+    image: '/rooms/bedroom1.jpg',
     referenceHeightCm: 210,
     referenceLabel: 'Standard 210cm doorway',
   },
   {
     key: 'office',
     label: 'Office',
-    image: '/rooms/office.jpg',
+    image: '/rooms/office1.jpg',
     referenceHeightCm: 210,
     referenceLabel: 'Standard 210cm doorway',
   },
-  {
-    key: 'hallway',
-    label: 'Hallway',
-    image: '/rooms/hallway.jpg',
-    referenceHeightCm: 210,
-    referenceLabel: 'Standard 210cm doorway',
-  },
+  // {
+  //   key: 'hallway',
+  //   label: 'Hallway',
+  //   image: '/rooms/hallway.jpg',
+  //   referenceHeightCm: 210,
+  //   referenceLabel: 'Standard 210cm doorway',
+  // },
 ];
 
 // Fallback used only if /rooms/<file> hasn't been added yet, so the page
@@ -70,7 +70,7 @@ export const FURNITURE_ITEMS = [
   {
     key: 'sofa',
     label: 'Above a Sofa',
-    image: '/furniture/sofa.jpg',
+    image: '/furniture/sofa1.jpg',
     referenceHeightCm: 85,
     referenceLabel: 'Sofa back height',
     hangGapCm: 20, // typical gap left between furniture top and artwork bottom
@@ -78,7 +78,7 @@ export const FURNITURE_ITEMS = [
   {
     key: 'bed',
     label: 'Above a Bed',
-    image: '/furniture/bed.jpg',
+    image: '/furniture/bed1.jpg',
     referenceHeightCm: 110,
     referenceLabel: 'Headboard height',
     hangGapCm: 15,
@@ -86,7 +86,7 @@ export const FURNITURE_ITEMS = [
   {
     key: 'desk',
     label: 'Above a Desk',
-    image: '/furniture/desk.png',
+    image: '/furniture/desk1.png',
     referenceHeightCm: 75,
     referenceLabel: 'Desk height',
     hangGapCm: 30,
@@ -94,7 +94,7 @@ export const FURNITURE_ITEMS = [
   {
     key: 'dining_table',
     label: 'Above a Dining Table',
-    image: '/furniture/dining.jpg',
+    image: '/furniture/dining1.jpg',
     referenceHeightCm: 75,
     referenceLabel: 'Table height',
     hangGapCm: 35,
