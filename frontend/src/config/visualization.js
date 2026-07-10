@@ -94,7 +94,7 @@ export const FURNITURE_ITEMS = [
   {
     key: 'dining_table',
     label: 'Above a Dining Table',
-    image: '/furniture/dining1.jpg',
+    image: '/furniture/dinning1.jpg',
     referenceHeightCm: 75,
     referenceLabel: 'Table height',
     hangGapCm: 35,
