@@ -23,7 +23,7 @@
 //    photos show up automatically with no other code changes.
 
 
-/ CALIBRATION
+//CALIBRATION
 // ----------------------------------------------------------------------------
 // `calibration` is what makes placement pixel-accurate instead of estimated.
 // Once you share a photo, I fill this in by inspecting it directly:
