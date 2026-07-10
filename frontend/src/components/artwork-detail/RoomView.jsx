@@ -26,10 +26,19 @@ export default function RoomView({ artwork, imageUrl }) {
 
   if (cal && box.ready) {
     const pxPerCm = (box.height * (cal.referenceBottomPct - cal.referenceTopPct)) / scene.referenceHeightCm;
-    const artHeightPx = heightCm * pxPerCm;
-    const artWidthPx = widthCm * pxPerCm;
+    let artHeightPx = heightCm * pxPerCm;
+    let artWidthPx = widthCm * pxPerCm;
     const bottomPx = box.top + cal.hangBottomPct * box.height;
     const centerXPx = box.left + cal.hangCenterXPct * box.width;
+
+    const availableHeightPx = bottomPx - box.top - 8;
+    let scaledDown = false;
+    if (artHeightPx > availableHeightPx) {
+      const scale = availableHeightPx / artHeightPx;
+      artHeightPx *= scale;
+      artWidthPx *= scale;
+      scaledDown = true;
+    }
 
     artworkStyle = {
       position: 'absolute',
@@ -45,7 +54,9 @@ export default function RoomView({ artwork, imageUrl }) {
       width: 0.1 * box.width,
       height: (cal.referenceBottomPct - cal.referenceTopPct) * box.height,
     };
-    scaleNote = `Scaled precisely against this photo's ${scene.referenceLabel.toLowerCase()}`;
+    scaleNote = scaledDown
+      ? `Shown smaller than true scale to fit this photo's frame — actual size is ${Math.round(heightCm)}×${Math.round(widthCm)}cm`
+      : `Scaled precisely against this photo's ${scene.referenceLabel.toLowerCase()}`;
   } else {
     // --- Estimated fallback path (used until this scene is calibrated) ---
     const heightPercent = Math.min((heightCm / ESTIMATE_SCENE_HEIGHT_CM) * 100, 60);

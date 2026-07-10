@@ -116,17 +116,33 @@ export const FURNITURE_ITEMS = [
     key: 'sofa',
     label: 'Above a Sofa',
     image: '/furniture/sofa1.jpg',
-    referenceHeightCm: 85,
+    referenceHeightCm: 70,
     referenceLabel: 'Sofa back height',
     hangGapCm: 20, // typical gap left between furniture top and artwork bottom
+    calibration: {
+      naturalWidth: 626,
+      naturalHeight: 463,
+      referenceTopPct: 0.55,
+      referenceBottomPct: 0.97,
+      hangCenterXPct: 0.42,
+      hangBottomPct: 0.35,
+    },
   },
   {
     key: 'bed',
     label: 'Above a Bed',
     image: '/furniture/bed1.jpg',
-    referenceHeightCm: 110,
+    referenceHeightCm: 120,
     referenceLabel: 'Headboard height',
     hangGapCm: 15,
+    calibration: {
+      naturalWidth: 236,
+      naturalHeight: 243,
+      referenceTopPct: 0.36,
+      referenceBottomPct: 0.93,
+      hangCenterXPct: 0.50,
+      hangBottomPct: 0.28,
+    },
   },
   {
     key: 'desk',
@@ -135,6 +151,14 @@ export const FURNITURE_ITEMS = [
     referenceHeightCm: 75,
     referenceLabel: 'Desk height',
     hangGapCm: 30,
+    calibration: {
+      naturalWidth: 736,
+      naturalHeight: 837,
+      referenceTopPct: 0.62,
+      referenceBottomPct: 0.97,
+      hangCenterXPct: 0.45,
+      hangBottomPct: 0.50,
+    },
   },
   {
     key: 'dining_table',
@@ -143,6 +167,14 @@ export const FURNITURE_ITEMS = [
     referenceHeightCm: 75,
     referenceLabel: 'Table height',
     hangGapCm: 35,
+    calibration: {
+      naturalWidth: 576,
+      naturalHeight: 791,
+      referenceTopPct: 0.68,
+      referenceBottomPct: 0.97,
+      hangCenterXPct: 0.50,
+      hangBottomPct: 0.40,
+    },
   },
 ];
 
