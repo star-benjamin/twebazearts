@@ -21,6 +21,27 @@
 //
 // 2. That's it — RoomView / FurnitureView read from these arrays, so the new
 //    photos show up automatically with no other code changes.
+
+
+/ CALIBRATION
+// ----------------------------------------------------------------------------
+// `calibration` is what makes placement pixel-accurate instead of estimated.
+// Once you share a photo, I fill this in by inspecting it directly:
+//
+//   naturalWidth / naturalHeight  — the photo file's real pixel dimensions
+//   referenceTopPct / referenceBottomPct
+//       — where the reference object (e.g. the doorway) starts and ends,
+//         each as a fraction (0–1) of the photo's own height
+//   hangCenterXPct   — horizontal center of the empty wall space, as a
+//                      fraction (0–1) of the photo's width
+//   hangBottomPct    — where the artwork's bottom edge should sit, as a
+//                      fraction (0–1) of the photo's height
+//
+// All four "Pct" values are measured against the PHOTO itself, not the
+// screen — so they're correct on any device once set, no separate mobile
+// handling needed. Leave `calibration: null` and the view falls back to a
+// generic estimate (what it's doing today).
+
 //
 // HOW THE SCALING WORKS
 // ----------------------------------------------------------------------------
@@ -36,22 +57,46 @@ export const ROOM_SCENES = [
     key: 'living_room',
     label: 'Living Room',
     image: '/rooms/living-room1.jpg',
-    referenceHeightCm: 210,
-    referenceLabel: 'Standard 210cm doorway',
+    referenceHeightCm: 205,
+    referenceLabel: 'Standard doorway',
+    calibration: {
+      naturalWidth: 736,
+      naturalHeight: 359,
+      referenceTopPct: 0.21,
+      referenceBottomPct: 0.97,
+      hangCenterXPct: 0.50,
+      hangBottomPct: 0.60,
+    },
   },
   {
     key: 'bedroom',
     label: 'Bedroom',
     image: '/rooms/bedroom1.jpg',
-    referenceHeightCm: 210,
-    referenceLabel: 'Standard 210cm doorway',
+    referenceHeightCm: 60,
+    referenceLabel: 'Nightstand height',
+    calibration: {
+      naturalWidth: 704,
+      naturalHeight: 724,
+      referenceTopPct: 0.576,
+      referenceBottomPct: 0.816,
+      hangCenterXPct: 0.50,
+      hangBottomPct: 0.50,
+    },
   },
   {
     key: 'office',
     label: 'Office',
     image: '/rooms/office1.jpg',
-    referenceHeightCm: 210,
-    referenceLabel: 'Standard 210cm doorway',
+    referenceHeightCm: 75,
+    referenceLabel: 'Desk height',
+    calibration: {
+      naturalWidth: 736,
+      naturalHeight: 802,
+      referenceTopPct: 0.636,
+      referenceBottomPct: 0.937,
+      hangCenterXPct: 0.38,
+      hangBottomPct: 0.46,
+    },
   },
   // {
   //   key: 'hallway',
@@ -86,7 +131,7 @@ export const FURNITURE_ITEMS = [
   {
     key: 'desk',
     label: 'Above a Desk',
-    image: '/furniture/desk1.png',
+    image: '/furniture/desk1.jpg',
     referenceHeightCm: 75,
     referenceLabel: 'Desk height',
     hangGapCm: 30,

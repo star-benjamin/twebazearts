@@ -29,13 +29,13 @@ export default function FurnitureView({ artwork, imageUrl }) {
 
         {/* Artwork, positioned to sit `gap` above the furniture's real height */}
         <div
-          className="absolute left-0 right-0 flex justify-center"
-          style={{ bottom: `${furnitureHeightPercent + gapPercent}%` }}
+          className="absolute left-0 right-0 flex justify-center items-end"
+          style={{ top: 0, bottom: `${furnitureHeightPercent + gapPercent}%` }}
         >
           <div
             className="relative bg-white flex items-center justify-center shadow-[0_8px_28px_rgba(0,0,0,.3)]"
             style={{
-              height: `min(${artworkHeightPercent}vh, 40vh)`,
+              height: `${artworkHeightPercent}%`,
               aspectRatio: `${widthCm} / ${heightCm}`,
             }}
           >

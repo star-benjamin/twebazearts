@@ -9,7 +9,7 @@ export default function ArtworkPreview({ artwork, imageUrl }) {
   const [mode, setMode] = useState('artwork');
 
   return (
-    <div className="lg:sticky lg:top-16 lg:h-[calc(100vh-64px)] bg-smoke flex flex-col">
+    <div className="h-[70dvh] lg:sticky lg:top-16 lg:h-[calc(100vh-64px)] bg-smoke flex flex-col">
       {/* Fixed-position preview area — only the content inside changes */}
       <div className="relative flex-1 min-h-0">
         {mode === 'artwork' && <OriginalView artwork={artwork} imageUrl={imageUrl} />}

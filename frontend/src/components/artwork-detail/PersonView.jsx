@@ -22,7 +22,7 @@ export default function PersonView({ artwork, imageUrl }) {
         <div
           className="relative bg-white flex items-center justify-center shadow-[0_8px_28px_rgba(0,0,0,.25)]"
           style={{
-            height: `min(${artworkHeightPercent}vh, 46vh)`,
+            height: `${artworkHeightPercent}%`,
             aspectRatio: `${widthCm} / ${heightCm}`,
           }}
         >
@@ -43,7 +43,7 @@ export default function PersonView({ artwork, imageUrl }) {
         <div className="flex flex-col items-center">
           <PersonSilhouette
             className="text-stone/70"
-            style={{ height: `min(${personHeightPercent}vh, 46vh)`, width: 'auto' }}
+            style={{ height: `${personHeightPercent}%`, width: 'auto' }}
           />
           <span className="text-[9px] md:text-[10px] tracking-widest uppercase text-mist mt-2">
             {AVERAGE_PERSON_HEIGHT_CM}cm
