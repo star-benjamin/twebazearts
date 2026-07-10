@@ -28,7 +28,7 @@ export default function ClassPoster({ cls, onBook }) {
 
   const v = generatePosterVariant(cls.id);
   const { palette, frameStyle, textureStyle, badgeShape, titleLayout, panelCorner, frameOffset, frameRotation } = v;
-  const { main, accent } = splitTitle(cls.course_title, cls.instructor);
+  const { main, accent } = splitTitle(cls.course_title);
   const { day, month } = formatDate(cls.session_datetime);
   const full = cls.seats_available <= 0;
 
@@ -42,8 +42,9 @@ export default function ClassPoster({ cls, onBook }) {
   const titleAccentY = overlay ? py + ph - 40 : 758;
   const badgeY        = overlay ? py + ph + 30 : 790;
   const infoY1        = badgeY + 20;
-  const infoY2        = badgeY + 45;
-  const footerLineY   = overlay ? badgeY + 100 : 875;
+  const infoY2        = badgeY + 43;
+  const infoY3         = badgeY + 66; // venue line
+  const footerLineY   = overlay ? badgeY + 105 : 890;
   const footerTextY   = footerLineY + 23;
 
   const titleFill = overlay ? palette.bg : palette.text;
@@ -197,6 +198,9 @@ export default function ClassPoster({ cls, onBook }) {
         <text x="215" y={infoY2} fontFamily="Georgia, serif" fontSize="15" fill="#7a7268">
           UGX {Number(cls.registration_fee).toLocaleString()} &#183; {full ? 'Fully booked' : `${cls.seats_available} of ${cls.capacity} seats left`}
         </text>
+        {cls.venue && (
+          <text x="215" y={infoY3} fontFamily="Georgia, serif" fontSize="13" fill="#7a7268">Venue: {cls.venue}</text>
+        )}
 
         <line x1="40" y1={footerLineY} x2="640" y2={footerLineY} stroke="#c8c3bb" strokeWidth="0.5" />
         <text x="40" y={footerTextY} fontFamily="Georgia, serif" fontSize="12" letterSpacing="3" fill={palette.text}>TWEBAZE ART STUDIO</text>

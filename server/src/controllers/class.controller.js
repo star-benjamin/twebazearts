@@ -2,7 +2,7 @@ const { supabaseAdmin } = require('../config/supabase');
 
 // CREATE — admin schedules a class (FR-CLS-001, BR-CLS-001)
 exports.create = async (req, res) => {
-  const { course_title, description, instructor, session_datetime, capacity, registration_fee } = req.body;
+  const { course_title, description, instructor, venue, session_datetime, capacity, registration_fee } = req.body;
 
   if (!course_title || !session_datetime || !capacity) {
     return res.status(400).json({ error: 'course_title, session_datetime, and capacity are required' });
@@ -13,7 +13,10 @@ exports.create = async (req, res) => {
 
   const { data, error } = await supabaseAdmin
     .from('art_classes')
-    .insert({ course_title, description, instructor, session_datetime, capacity, registration_fee: registration_fee || 0 })
+    .insert({
+      course_title, description, instructor, venue: venue || 'National Theatre',
+      session_datetime, capacity, registration_fee: registration_fee || 0,
+    })
     .select()
     .single();
 
@@ -55,8 +58,8 @@ exports.detail = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-  const { course_title, description, instructor, session_datetime, capacity, registration_fee } = req.body;
-  const update = { course_title, description, instructor, session_datetime, capacity, registration_fee };
+  const { course_title, description, instructor, venue, session_datetime, capacity, registration_fee } = req.body;
+  const update = { course_title, description, instructor, venue, session_datetime, capacity, registration_fee };
   Object.keys(update).forEach((k) => update[k] === undefined && delete update[k]);
 
   const { data, error } = await supabaseAdmin

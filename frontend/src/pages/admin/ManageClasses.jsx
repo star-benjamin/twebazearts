@@ -4,7 +4,7 @@ import { X, Trash2 } from 'lucide-react';
 import AdminLayout from '../../components/admin/AdminLayout';
 import { classApi } from '../../api/class.api';
 
-const EMPTY_FORM = { course_title: '', description: '', instructor: '', session_datetime: '', capacity: '', registration_fee: '' };
+const EMPTY_FORM = { course_title: '', description: '', instructor: '', venue: 'National Theatre', session_datetime: '', capacity: '', registration_fee: '' };
 
 export default function ManageClasses() {
   const qc = useQueryClient();
@@ -32,6 +32,7 @@ export default function ManageClasses() {
           <div key={c.id} className="bg-white border border-ash p-5">
             <h3 className="font-serif text-lg mb-1">{c.course_title}</h3>
             <p className="text-xs text-stone mb-3">{c.instructor} · {new Date(c.session_datetime).toLocaleString()}</p>
+            <p className="text-xs text-stone mb-3">Venue: {c.venue}</p>
             <p className="text-xs mb-3">{c.seats_taken}/{c.capacity} booked</p>
             <div className="flex gap-3">
               <button onClick={() => setRosterFor(c)} className="text-[10px] uppercase tracking-widest border-b border-mist hover:border-ink">Roster</button>
@@ -55,6 +56,7 @@ export default function ManageClasses() {
 function ClassEditor({ cls, onClose, onSaved }) {
   const [form, setForm] = useState(cls ? {
     course_title: cls.course_title, description: cls.description || '', instructor: cls.instructor || '',
+    venue: cls.venue || 'National Theatre',
     session_datetime: cls.session_datetime?.slice(0, 16) || '', capacity: cls.capacity, registration_fee: cls.registration_fee,
   } : EMPTY_FORM);
   const [error, setError] = useState(null);
@@ -89,6 +91,7 @@ function ClassEditor({ cls, onClose, onSaved }) {
           <input required placeholder="Course Title" value={form.course_title} onChange={set('course_title')} className="w-full border border-ash px-3 py-2 text-sm" />
           <textarea rows={3} placeholder="Description" value={form.description} onChange={set('description')} className="w-full border border-ash px-3 py-2 text-sm" />
           <input placeholder="Instructor" value={form.instructor} onChange={set('instructor')} className="w-full border border-ash px-3 py-2 text-sm" />
+          <input required placeholder="Venue" value={form.venue} onChange={set('venue')} className="w-full border border-ash px-3 py-2 text-sm" />
           <input required type="datetime-local" value={form.session_datetime} onChange={set('session_datetime')} className="w-full border border-ash px-3 py-2 text-sm" />
           <div className="grid grid-cols-2 gap-3">
             <input required type="number" min="1" placeholder="Capacity" value={form.capacity} onChange={set('capacity')} className="border border-ash px-3 py-2 text-sm" />
