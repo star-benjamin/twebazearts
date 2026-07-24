@@ -3,10 +3,11 @@ import { useQuery } from '@tanstack/react-query';
 import { blogApi } from '../../api/blog.api';
 
 export default function Blog() {
-  const { data: posts = [], isLoading } = useQuery({
+  const { data: postsRaw, isLoading } = useQuery({
     queryKey: ['blog', 'published'],
     queryFn: () => blogApi.list(),
   });
+  const posts = Array.isArray(postsRaw) ? postsRaw : [];
 
   return (
     <div className="min-h-screen pt-16 px-6 md:px-10 py-16 md:py-20 max-w-3xl mx-auto">
@@ -21,11 +22,26 @@ export default function Blog() {
       ) : (
         <div className="divide-y divide-ash">
           {posts.map((post) => (
-            <Link key={post.id} to={`/blog/${post.slug}`} className="block py-8 group">
-              <p className="text-[10px] tracking-widest uppercase text-stone mb-2">
-                {new Date(post.published_at || post.created_at).toLocaleDateString()}
-              </p>
-              <h2 className="font-serif text-2xl group-hover:text-gold transition-colors">{post.title}</h2>
+            <Link key={post.id} to={`/blog/${post.slug}`} className="flex items-center justify-between gap-6 py-8 group">
+              <div className="min-w-0">
+                <p className="text-[10px] tracking-widest uppercase text-stone mb-2">
+                  {new Date(post.published_at || post.created_at).toLocaleDateString()}
+                </p>
+                <h2 className="font-serif text-2xl group-hover:text-gold transition-colors truncate">{post.title}</h2>
+              </div>
+
+              {post.tagged_artworks?.length > 0 && (
+                <div className="flex -space-x-3 flex-shrink-0">
+                  {post.tagged_artworks.slice(0, 3).map((a) => {
+                    const img = a.images?.find((i) => i.is_primary) || a.images?.[0];
+                    return (
+                      <div key={a.id} className="w-12 h-12 rounded-full border-2 border-white bg-smoke overflow-hidden">
+                        {img && <img src={img.webp_url || img.url} alt="" className="w-full h-full object-cover" />}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </Link>
           ))}
         </div>
